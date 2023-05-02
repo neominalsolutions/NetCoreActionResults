@@ -1,0 +1,16 @@
+﻿
+@model TestViewModel
+
+@{
+    ViewData["Title"] = "Test";
+}
+
+<partial name="Partials/_TestPartial" model="Model.PartialModel" />
+
+
+
+
+@await Component.InvokeAsync("Test")
+
+<h1>Test</h1>
+

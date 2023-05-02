@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+}
+
+@model List<UserViewModel>
+
+<h1>Users</h1>
+
+<hr />
+
+@*Javascipt ile form gönderme AJAX*@
+<form novalidate onsubmit="SendUserAjax(event)" method="post">
+<label>Email</label>
+<input id="emailInput" class="form-control" type="text" name="Email" />
+<label>UserName</label>
+<input id="usernameInput" class="form-control" type="text" name="UserName" />
+<button type="submit" class="btn btn-success">JSON Ekle</button>
+</form>
+
+<ul id="liste" class="list-group">
+  @foreach (var item in Model)
+  {
+    <li class="list-group-item">
+      @item.UserName
+    </li>
+  }
+</ul>
+
+<button onclick="SendUser()">User Bilgilerini Post Et</button>
+
+<!-- veri gönderme işleminde eğer contentType bilgisini berlirtmez isek json xml tipinde istek yaptığımız bilgisi bu durumda 415 hata kodu alırız. -->
+
+@section Scripts {
+  <script>
+
+    function SendUserAjax(event){
+        event.preventDefault(); // formun post edilmesini engelledik. post back olmayı engeller.
+
+        console.log('event', event);
+
+        const data = {
+            Email: $('#emailInput').val(),
+            UserName: $('#usernameInput').val()
+        };
+        // $ keyword ile Jquery kütüphanesine bağlandık. Jquery kütüphanesi üzerinden $.ajax ile json result ile çalışmış olduk.
+
+        console.log('frm',$(event).serializeArray());
+
+        // AJAX ile post ederken action içindeki modelden önce bodyden gönderildiğini söylemek için [FromBody] yazalım.
+
+        $.ajax({
+          method:'POST',
+          url:'/json-result',
+          contentType:'application/json',
+          data: JSON.stringify(data),
+          success:(response) => {
+            console.log('response', response);
+
+            //$"{}"
+                if (response.isSucceded) {
+                  // backtick
+                  $('#liste').append(`<li class='list-group-item'>${data.UserName}</li>`)
+                }
+          },
+          error:(err) => {
+            console.log('hata', err);
+          }
+        })
+    }
+
+    function SendUser(){
+         var data = { UserName: 'ali', Email: 'test@test.com' };
+
+         console.log('data', data);
+    
+
+    fetch('/json-result', { method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(data) })
+    .then(response => {
+      // isteğin başarılı sonuçlandığında çalışacak olan fuction
+      console.log('response', response);
+
+      return response.json(); // gönderilecek olan değeri json formatına dönüştür.
+
+    })
+    .then(data => {
+      // json formatına dönüşmüş hali yakalanır. mvcden dönen mesajı yakalarız.
+      console.log('data', data)
+
+                alert(data.message)
+    })
+    .catch(function(err) {
+      // istek hatalo olduğunda çalışacak function
+            console.log('error', err);
+    })
+    }
+
+    //function onError(error) {
+
+    //}
+
+  </script>
+}
+

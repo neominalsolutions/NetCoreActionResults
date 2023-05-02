@@ -1,0 +1,22 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@* View den partial çağırma yöntemi *@
+@* Tag Helper yöntemi *@
+<partial name="Partials/_TestPartial" model="Model.PartialModel" />
+<hr />
+
+@* Html helper yöntemi *@
+@await Html.PartialAsync("Partials/_TestPartial", Model.PartialModel)
+
+<hr />
+@* View Component çalıştırma çağırma şeklimiz, aşağıdaki gibi componentin hiç bir model bağımlılığı yoktur. *@
+@await Component.InvokeAsync("Test",new {title = "deneme1"});
