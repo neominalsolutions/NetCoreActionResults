@@ -91,13 +91,14 @@ namespace NetCoreActionResults.Controllers
     [HttpGet("unauthorized-result", Name = "unAuthorizedResultRoute")]
     public UnauthorizedResult UnauthorizedResult()
     {
-      return Unauthorized();
+      return Unauthorized(); // 401 sayfası döndürür.
     }
 
 
     [HttpGet("notfound-result", Name = "notFoundResultRoute")]
     public NotFoundResult NotFoundResult()
     {
+      // kaynak link bulunamadığı zaman döndüreceğimiz result tipi
       return NotFound();
     }
 

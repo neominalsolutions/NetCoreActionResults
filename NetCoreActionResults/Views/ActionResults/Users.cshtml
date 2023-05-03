@@ -52,6 +52,8 @@
 
         const formData = $('#frm').serializeArray();
 
+        console.log('formData', formData);
+
         $.each(formData,(index,item) => {
             console.log('key', index);
             console.log('value', item);
@@ -74,8 +76,9 @@
                 if (response.isSucceded) {
                   // backtick
                   $('#liste').append(`<li class='list-group-item'>${data.UserName}</li>`);
-                    $('#emailInput').val('');
-                    $('#usernameInput').val(''); // boş bırakalım
+                    //$('#emailInput').val('');
+                    //$('#usernameInput').val(''); // boş bırakalım
+                    $('#frm').trigger('reset');
                 }
           },
           error:(err) => {
