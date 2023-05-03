@@ -26,6 +26,33 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Action Results
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" asp-route="htmlResultRoute">Html Result</a></li>
+              <li><a class="dropdown-item" asp-route="partialResultRoute">Partial Result</a></li>
+              <li><a class="dropdown-item" asp-route="viewComponentResultRoute">View Component Result</a></li>
+              <li><a class="dropdown-item" asp-route="viewResultRoute">View Result</a></li>
+
+              <li><a class="dropdown-item" asp-route="fileResultRoute">File Result</a></li>
+
+              <li><a class="dropdown-item" asp-route="unAuthorizedResultRoute">Unauthorized Result</a></li>
+
+              <li><a class="dropdown-item" asp-route="notFoundResultRoute">NotFound Result</a></li>
+
+              <li><a class="dropdown-item" asp-route="redirectResultRoute">Redirect Result</a></li>
+
+              <li><a class="dropdown-item" asp-route="redirectRouteResultRoute">RedirectRoute Result</a></li>
+
+          
+            </ul>
+          </div>
+
+
+
                 </div>
             </div>
         </nav>

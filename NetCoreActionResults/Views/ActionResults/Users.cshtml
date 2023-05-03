@@ -10,14 +10,16 @@
 <hr />
 
 @*Javascipt ile form gönderme AJAX*@
-<form novalidate onsubmit="SendUserAjax(event)" method="post">
+<form id="frm" novalidate onsubmit="SendUserAjax(event)" method="post">
 <label>Email</label>
 <input id="emailInput" class="form-control" type="text" name="Email" />
 <label>UserName</label>
 <input id="usernameInput" class="form-control" type="text" name="UserName" />
+<br />
 <button type="submit" class="btn btn-success">JSON Ekle</button>
-</form>
 
+</form>
+<br />
 <ul id="liste" class="list-group">
   @foreach (var item in Model)
   {
@@ -27,7 +29,8 @@
   }
 </ul>
 
-<button onclick="SendUser()">User Bilgilerini Post Et</button>
+<br />
+<button class="btn btn-primary" onclick="SendUser()">User Bilgilerini Post Et</button>
 
 <!-- veri gönderme işleminde eğer contentType bilgisini berlirtmez isek json xml tipinde istek yaptığımız bilgisi bu durumda 415 hata kodu alırız. -->
 
@@ -40,12 +43,22 @@
         console.log('event', event);
 
         const data = {
-            Email: $('#emailInput').val(),
-            UserName: $('#usernameInput').val()
+            //Email: $('#emailInput').val(),
+            //UserName: $('#usernameInput').val()
         };
         // $ keyword ile Jquery kütüphanesine bağlandık. Jquery kütüphanesi üzerinden $.ajax ile json result ile çalışmış olduk.
 
-        console.log('frm',$(event).serializeArray());
+        //console.log('frm',$(event).serializeArray());
+
+        const formData = $('#frm').serializeArray();
+
+        $.each(formData,(index,item) => {
+            console.log('key', index);
+            console.log('value', item);
+            data[item.name] = item.value;
+        })
+
+        console.log('data', data);
 
         // AJAX ile post ederken action içindeki modelden önce bodyden gönderildiğini söylemek için [FromBody] yazalım.
 
@@ -60,7 +73,9 @@
             //$"{}"
                 if (response.isSucceded) {
                   // backtick
-                  $('#liste').append(`<li class='list-group-item'>${data.UserName}</li>`)
+                  $('#liste').append(`<li class='list-group-item'>${data.UserName}</li>`);
+                    $('#emailInput').val('');
+                    $('#usernameInput').val(''); // boş bırakalım
                 }
           },
           error:(err) => {

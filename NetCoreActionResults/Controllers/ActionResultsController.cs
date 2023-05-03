@@ -10,7 +10,7 @@ namespace NetCoreActionResults.Controllers
     /// </summary>
     /// <returns></returns>
 
-    [HttpGet("html-result")]
+    [HttpGet("html-result", Name = "htmlResultRoute")]
     public ContentResult HtmlContent()
     {
       //return new ContentResult()
@@ -21,7 +21,7 @@ namespace NetCoreActionResults.Controllers
     /// Partialview ise tanımlanmış olan bir html'i arayüzde bir parça halinde göstermek için kullanılır. partial view html içeriği kendi sayfasında üretilir.
     /// </summary>
     /// <returns></returns>
-    [HttpGet("partial-result")]
+    [HttpGet("partial-result", Name ="partialResultRoute")]
     public PartialViewResult Partial()
     {
       var model = new PartialViewModel();
@@ -37,13 +37,13 @@ namespace NetCoreActionResults.Controllers
     /// </summary>
     /// <returns></returns>
 
-    [HttpGet("view-component-result")]
+    [HttpGet("view-component-result", Name = "viewComponentResultRoute")]
     public ViewComponentResult ViewComponentResult()
     {
       return ViewComponent("Test");
     }
 
-    [HttpGet("users")]
+    [HttpGet("users", Name ="viewResultRoute")]
     public ViewResult Users()
     {
       var users = new List<UserViewModel>();
@@ -64,7 +64,7 @@ namespace NetCoreActionResults.Controllers
     /// </summary>
     /// <returns></returns>
     /// 
-    [HttpPost("json-result")]
+    [HttpPost("json-result", Name ="jsonResultRoute")]
     public JsonResult JsonResult([FromBody] UserInputModel data)
     {
 
@@ -81,6 +81,41 @@ namespace NetCoreActionResults.Controllers
       return Json(result);
     }
 
+
+    [HttpGet("file-result", Name ="fileResultRoute")]
+    public FileResult FileResult()
+    {
+      return File("~/docs/NET-Microservices-Architecture-for-Containerized-NET-Applications.pdf","application/pdf");
+    }
+
+    [HttpGet("unauthorized-result", Name = "unAuthorizedResultRoute")]
+    public UnauthorizedResult UnauthorizedResult()
+    {
+      return Unauthorized();
+    }
+
+
+    [HttpGet("notfound-result", Name = "notFoundResultRoute")]
+    public NotFoundResult NotFoundResult()
+    {
+      return NotFound();
+    }
+
+
+
+    [HttpGet("redirect-result", Name ="redirectResultRoute")]
+    public RedirectResult RedirectResult()
+    {
+      //return RedirectToAction("Privacy","Home");
+      
+      return Redirect("/Home/Privacy");
+    }
+
+    [HttpGet("redirect-route-result", Name ="redirectRouteResultRoute")]
+    public RedirectToRouteResult RedirectRouteResult()
+    {
+      return RedirectToRoute("htmlResultRoute");
+    }
 
 
 
